@@ -1,0 +1,17 @@
+{
+  "name": "broadcast-server",
+  "version": "1.0.0",
+  "description": "The goal of this project is to work with websockets and implement real-time communication between clients and servers.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "HUZAIFA ABDULLAH MENSAH",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^14.0.0",
+    "express": "^5.1.0",
+    "ws": "^8.18.3"
+  }
+}
