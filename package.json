@@ -9,7 +9,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js"
+    "start": "broadcast-server start --port 8080",
+    "connect": "broadcast-server connect --port 8080"
+}
   },
   "author": "HUZAIFA ABDULLAH MENSAH",
   "license": "ISC",
