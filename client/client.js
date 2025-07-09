@@ -46,7 +46,7 @@ const connectToServer = (port) => {
                 ws.close();
                 rl.close();
             }else{
-                ws.send(input);
+                ws.send(trimInput);
                 promptForMessage()
             }
         })
