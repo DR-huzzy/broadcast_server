@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "The goal of this project is to work with websockets and implement real-time communication between clients and servers.",
   "main": "server.js",
+  "bin": {
+    "broadcast-server": "./server/serverCLI.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/server.js"

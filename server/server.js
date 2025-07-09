@@ -1,50 +1,58 @@
 //WebSocket server logic
-
 const WebSocket = require('ws');
 
-//create the websocket server
-const wss = new WebSocket.Server({ port: 8080});
 
-//Track all connected clients
-const clients = new Set();
+const startServer = (port) => {
+
+    //create the websocket server
+    const wss = new WebSocket.Server({ port });
+
+    //Track all connected clients
+    const clients = new Set();
 
 
-wss.on('connection', (ws) => {
+    wss.on('connection', (ws) => {
 
-    //Add new client to the set
-    clients.add(ws);
-    console.log(`New client connected, Clients connected: ${clients.size}`);
+        //Add new client to the set
+        clients.add(ws);
+        console.log(`New client connected, Clients connected: ${clients.size}`);
 
-    // handle messages from client 
-    ws.on('message',(message) => {
-        // client message
-        console.log(`Recieved: ${message.toString()}`);
+        // handle messages from client 
+        ws.on('message',(message) => {
 
-        //broad cast to all other clients
-        //Ensures the client is still connected.
-        //excludes the sender from receiving their own message
-        clients.forEach((client) => {
-            if(client !== ws && client.readyState === WebSocket.OPEN){
-                client.send(message.toString());
-            }
+            // client message
+            console.log(`Recieved: ${message.toString()}`);
+
+            //broad cast to all other clients
+            //Ensures the client is still connected.
+            //excludes the sender from receiving their own message
+            clients.forEach((client) => {
+                if(client !== ws && client.readyState === WebSocket.OPEN){
+                    client.send(message.toString());
+                }
+            })
+
         })
 
+        // handle client disconnection
+        ws.on('close', () => {
+            clients.delete(ws);
+            console.log(`Clients disconnected. Remaining clients: ${clients.size}`);
+        })
+
+        // error handler
+        ws.on('error', (error) => {
+            console.log(`client error: ${error}`)
+        })
+
+        
     })
 
-    // handle client disconnection
-    ws.on('close', () => {
-        clients.delete(ws);
-        console.log(`Clients disconnected. Remaining clients: ${clients.size}`);
-    })
+    console.log(`web socket server running on ws://localhost:${port}`);
 
-    // error handler
-    ws.on('error', (error) => {
-        console.log(`client error: ${error}`)
-    })
+}
 
-    
-})
+module.exports = { startServer };
 
-console.log(`web socket server running on ws://localhost:8080`);
 
 
