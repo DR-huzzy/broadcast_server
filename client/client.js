@@ -39,9 +39,10 @@ const connectToServer = (port) => {
     //Prompt user for message
 
     const promptForMessage  = () => {
-        rl.question('Enter message or "exit" to quit', (input) => {
+        rl.question('Enter message or "exit" to quit\n', (input) => {
 
-            if(input.toLowerCase() === 'exit'){
+            let trimInput = input.trim()
+            if(trimInput.toLowerCase() === 'exit'){
                 ws.close();
                 rl.close();
             }else{
